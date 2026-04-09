@@ -1,5 +1,5 @@
 {
   "name": "AquaSmart: Pool Intelligence",
   "description": "Advanced pool management system with iAquaLink integration, equipment monitoring, and predictive maintenance.",
-  "requestFramePermissions": []
+  "requestFramePermissions": ["camera"]
 }

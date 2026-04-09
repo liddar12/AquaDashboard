@@ -1,1 +1,13 @@
 @import "tailwindcss";
+
+@theme {
+  --color-uom-blue: #00274C;
+  --color-uom-maize: #FFCB05;
+  --color-uom-maize-dark: #E6B705;
+}
+
+@layer base {
+  body {
+    @apply bg-uom-blue text-slate-200;
+  }
+}

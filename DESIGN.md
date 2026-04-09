@@ -1,12 +1,12 @@
 # Design Documentation: AquaSmart UI/UX
 
-## 1. Aesthetic Direction: "The Digital Pool Room"
-Inspired by high-end audio equipment and scientific instruments (Design Recipe 3).
+## 1. Aesthetic Direction: "Maize & Blue"
+Inspired by the University of Michigan colors and high-end hardware interfaces.
 
 *   **Color Palette:**
-    *   **Background:** `#0F172A` (Deep Navy/Slate)
-    *   **Surface:** `#1E293B` (Muted Matte Cards)
-    *   **Accent (Active):** `#38BDF8` (Pool Blue)
+    *   **Background:** `#00274C` (UofM Blue)
+    *   **Surface:** `#001A33` (Darker Blue for cards)
+    *   **Accent (Active):** `#FFCB05` (UofM Maize)
     *   **Accent (Warning):** `#F43F5E` (Coral Red)
     *   **Accent (Success):** `#10B981` (Emerald)
 *   **Typography:**
@@ -30,7 +30,36 @@ Inspired by high-end audio equipment and scientific instruments (Design Recipe 3
 *   **Energy Estimate:** Line chart showing estimated kWh usage.
 *   **Chemical Trends:** (Placeholder) Sparklines for pH and Chlorine.
 
+### 2.3. Water Quality Dashboard
+*   **Status Gauges:** Twin vertical or circular gauges for pH and ORP.
+*   **Range Indicators:** Visual "Safe Zone" overlays on the gauges.
+*   **Trend Sparklines:** 24-hour history for chemical stability.
+*   **Alert Banners:** High-visibility warnings at the top of the screen for critical imbalances.
+
+### 2.5. Smart Nudges Section
+*   **Location:** Right column, above System Alerts.
+*   **Visual Style:** 
+    *   Subtle left-border accent (Maize).
+    *   Type-specific icons (Wind for weather, Clock for events, Zap for efficiency).
+    *   Actionable text links with `ChevronRight` icons.
+    *   Entrance animations: `opacity` and `y` offset using `motion`.
+
+### 2.6. Weather Intelligence Card
+*   **Visual Style:** Monospace data points for estimated run times.
+*   **Logic:** Displays calculated hours for heater and pump based on ambient vs. water temperature.
+
+### 2.7. Manual Entry Modal
+*   **Visual Style:** High-contrast form inputs with Maize focus borders.
+*   **Fields:** pH, ORP, Pump Time, Heater Time.
+
 ## 3. Interaction Details
+*   **Alert Lifecycle:**
+    *   **Entrance:** Subtle "slide and fade" animation for new alerts using `motion`.
+    *   **Severity Styling:** 
+        *   *Critical:* Pulse animation on the icon, rose-colored border, high-contrast text.
+        *   *Warning:* Amber border, static icon.
+        *   *Info/Success:* Emerald or sky-blue border, subtle appearance.
+    *   **Dismissal:** Explicit "X" button with exit animation; "All systems nominal" state when empty.
 *   **Haptic Feedback:** (For PWA/Native) Subtle vibrations when toggling equipment.
 *   **Glow Effects:** Active equipment cards have a subtle outer glow in the accent color.
 *   **Micro-animations:** The "Pump" icon rotates slowly when the pump is running; speed increases with RPM.
