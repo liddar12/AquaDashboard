@@ -19,7 +19,48 @@ if (!supabaseUrl || !supabaseAnonKey) {
   console.warn('Supabase credentials missing. Auth will not function correctly.');
 }
 
+// Custom storage to prevent SecurityError in iframes where localStorage/sessionStorage is blocked
+const customStorage = {
+  getItem: (key: string) => {
+    try {
+      if (typeof window !== 'undefined') {
+        return window.localStorage.getItem(key);
+      }
+    } catch (e) {
+      console.warn('localStorage is not available');
+    }
+    return null;
+  },
+  setItem: (key: string, value: string) => {
+    try {
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, value);
+      }
+    } catch (e) {
+      console.warn('localStorage is not available');
+    }
+  },
+  removeItem: (key: string) => {
+    try {
+      if (typeof window !== 'undefined') {
+        window.localStorage.removeItem(key);
+      }
+    } catch (e) {
+      console.warn('localStorage is not available');
+    }
+  }
+};
+
 export const supabase = createClient(
   supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder'
+  supabaseAnonKey || 'placeholder',
+  {
+    auth: {
+      storage: customStorage,
+      autoRefreshToken: true,
+      persistSession: true,
+      detectSessionInUrl: true,
+      flowType: 'implicit'
+    }
+  }
 );

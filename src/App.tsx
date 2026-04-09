@@ -174,7 +174,8 @@ export default function App() {
     });
 
     // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log('AUTH STATE CHANGED:', event, session?.user?.email);
       setUser(session?.user ?? null);
     });
 
@@ -191,18 +192,24 @@ export default function App() {
     e.preventDefault();
     setAuthError(null);
     setIsAuthLoading(true);
+    console.log('handleAuth called with mode:', authMode);
 
     try {
       if (authMode === 'login') {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        console.log('Attempting login...');
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        console.log('Login result:', { data, error });
         if (error) throw error;
       } else if (authMode === 'signup') {
+        console.log('Attempting signup...');
         if (!validatePassword(password)) {
           throw new Error("Password must be at least 8 characters and contain both letters and numbers.");
         }
-        const { error } = await supabase.auth.signUp({ email, password });
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        console.log('Signup result:', { data, error });
         if (error) throw error;
       } else if (authMode === 'reset') {
+        console.log('Attempting reset...');
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
           redirectTo: window.location.origin,
         });
@@ -210,6 +217,7 @@ export default function App() {
         setResetSent(true);
       }
     } catch (err: any) {
+      console.error('Auth error caught:', err);
       setAuthError(err.message);
     } finally {
       setIsAuthLoading(false);

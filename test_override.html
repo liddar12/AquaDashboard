@@ -1,0 +1,11 @@
+<script>
+try {
+  Object.defineProperty(window, 'sessionStorage', {
+    get: function() { return null; },
+    configurable: true
+  });
+  console.log("Success");
+} catch(e) {
+  console.log(e.message);
+}
+</script>
